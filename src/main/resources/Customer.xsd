@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Customer"
+	xmlns:tns="http://www.example.org/Customer" elementFormDefault="qualified">
+	<complexType name="addressType">
+		<sequence>
+			<element name="houseNo" type="string" />
+			<element name="street" type="string"/>
+			<element name="postCode" type="string"/>
+			<element name="city" type="string"/>
+			<element name="country" type="string"/>
+		</sequence>
+	</complexType>
+	<complexType name="accountType">
+		<sequence>
+			<element name="accountId" minOccurs="1" type="string"></element>
+			<element name="sortCode" type="string"/>
+			<element name="accountNumber" type="string"/>
+			<element name="iban" minOccurs="0" type="string"/>
+			<element name="bic" minOccurs="0" type="string"/>
+			<element name="currency"></element>
+			<element name="holders">
+				<complexType>
+					<sequence>
+						<element name="customerId" type="string" maxOccurs="unbounded"></element>
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="customerType">
+		<sequence>
+			<element name="customerId" type="string"></element>
+			<element name="Name" type="string"></element>
+			<element name="addresses" type="tns:addressType" maxOccurs="unbounded" />
+			<element name="accounts" type="tns:accountType" maxOccurs="unbounded"
+				minOccurs="1" />
+		</sequence>
+	</complexType>
+	<complexType name="transactionType">
+		<sequence>
+			<element name="amount" type="float"></element>
+			<element name="date" type="dateTime"></element>
+			<element name="reference" type="string"></element>
+			<element name="type">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="CREDIT"></enumeration>
+						<enumeration value="DEBIT"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="scheme">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="BACS"></enumeration>
+						<enumeration value="CHAPS"></enumeration>
+						<enumeration value="SEPA"></enumeration>
+						<enumeration value="FPS"></enumeration>
+						<enumeration value="OTHER"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="balance" type="float"></element>
+		</sequence>
+	</complexType>
+	<element name="customer" type="tns:customerType"></element>
+	<element name="account" type="tns:accountType"></element>
+	<element name="statement">
+		<complexType>
+			<sequence>
+				<element name="transaction" type="tns:transactionType" maxOccurs="unbounded"></element>
+			</sequence>
+		</complexType>
+	</element>
+</schema>

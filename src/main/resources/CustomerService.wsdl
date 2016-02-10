@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.example.org/CustomerService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:cust="http://www.example.org/Customer" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="CustomerService" targetNamespace="http://www.example.org/CustomerService/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.example.org/CustomerService/">
+			<xsd:import schemaLocation="Customer.xsd"
+				namespace="http://www.example.org/Customer">
+			</xsd:import>
+
+			<xsd:element name="getCustomer">
+				<xsd:complexType>
+					<xsd:sequence>
+
+						<xsd:element name="customerId" type="xsd:string"></xsd:element>
+						<xsd:element name="name" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="getCustomerResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+
+						<xsd:element name="customer" type="cust:customerType"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="getAccounts">
+				<xsd:complexType>
+					<xsd:sequence>
+
+						<xsd:element name="accountNumber" type="xsd:string"
+							minOccurs="0"></xsd:element>
+						<xsd:element name="sortCode" type="xsd:string"
+							minOccurs="0"></xsd:element>
+						<xsd:element name="accountId" type="xsd:string"
+							minOccurs="0"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="getAccountsResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+
+						<xsd:element name="accounts" type="cust:accountType"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="getTransactions">
+				<xsd:complexType>
+					<xsd:sequence>
+
+						<xsd:element name="accountId" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="getTransactionsResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+
+						<xsd:element name="statement" ref="cust:statement"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="getCustomerRequest">
+		<wsdl:part name="parameters" element="tns:getCustomer"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getCustomerResponse">
+		<wsdl:part name="parameters" element="tns:getCustomerResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getAccountsRequest">
+		<wsdl:part name="parameters" element="tns:getAccounts"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getAccountsResponse">
+		<wsdl:part name="parameters" element="tns:getAccountsResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTransactionsRequest">
+		<wsdl:part name="parameters" element="tns:getTransactions"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTransactionsResponse">
+		<wsdl:part name="parameters" element="tns:getTransactionsResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="CustomerService">		<wsdl:operation name="getCustomer">
+			<wsdl:input message="tns:getCustomerRequest"></wsdl:input>
+			<wsdl:output message="tns:getCustomerResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAccounts">
+			<wsdl:input message="tns:getAccountsRequest"></wsdl:input>
+			<wsdl:output message="tns:getAccountsResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTransactions">
+			<wsdl:input message="tns:getTransactionsRequest"></wsdl:input>
+			<wsdl:output message="tns:getTransactionsResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="CustomerServiceBinding"
+		type="tns:CustomerService">
+
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="getCustomer">
+
+			<soap:operation
+				soapAction="http://www.example.org/CustomerService/getCustomer" />
+			<wsdl:input>
+
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAccounts">
+			<soap:operation
+				soapAction="http://www.example.org/CustomerService/getAccounts" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTransactions">
+			<soap:operation
+				soapAction="http://www.example.org/CustomerService/getTransactions" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="CustomerService">
+		<wsdl:port binding="tns:CustomerServiceBinding" name="CustomerServiceSOAP">
+			<soap:address location="http://www.example.org/" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
